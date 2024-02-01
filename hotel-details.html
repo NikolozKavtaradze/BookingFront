@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBooking</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav>
+        <div class="nav_logo"a>MyBooking</div>
+        <ul class="nav_links">
+            <li class="link"><a href="#">Home</a></li>
+            <li class="link"><a href="#">Book</a></li>
+            <li class="link"><a href="#">Blog</a></li>
+            <li class="link"><a href="#">Contact Us</a></li>
+
+        </ul>
+    </nav>
+
+    <section class="section_container" id="hotel-container">
+    </section>
+
+    <section class="geo_location_section section_container">
+        <h2 class="section_header">Location</h2>
+        <div class="google_map" id="googleMap">
+        </div>
+    </section>
+    
+
+    <script type="module" src='./scripts/hotelDetails.js'></script>
+
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCqt7mdUiYwP-N7mMoIxCmvvr0poRVStU&callback=console.debug&libraries=maps,marker&v=beta"></script>
+</body>
+</html>
