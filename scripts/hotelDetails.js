@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const hotel_container = document.getElementById('hotel-container')
 
+    const location_container = document.getElementById('geo-location')
+
     const urlParams = new URLSearchParams(window.location.search);
 
     const hotelId = urlParams.get('hotelId')
@@ -91,6 +93,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hotel_container.appendChild(hotel_header)
     hotel_container.appendChild(hotContainer)
+
+    location_container.innerHTML = `
+    <iframe
+    width="800"
+    height="500"
+    frameborder="0"
+    referrerpolicy="no-referrer-when-downgrade"
+    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAE5TgNBgFJpB3mENfPCG5gPDJy9kwyjCs&q=${geolocation.lat},${geolocation.lon}"
+    allowfullscreen>
+  </iframe>
+    `
+
 })
 
 function generateAmenitiesList (amenities) {
