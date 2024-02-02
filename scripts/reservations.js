@@ -2,36 +2,31 @@ import hotelData from "../hotel-list.json" assert {type: 'json'}
 
 const hotel_container = document.getElementById('hotel-container');
 
-document.getElementById('submitBtn').addEventListener('click', (event) => {
-    event.preventDefault()
+const reservedHotelsDetails =  JSON.parse(localStorage.getItem('reservedHotels'))
 
-    var location = document.getElementById('locations').value;
-    var checkIn = document.getElementById('checkIn').value;
-    var checkOut = document.getElementById('checkOut').value;
+console.log(reservedHotelsDetails)
 
-    if(!location || !checkIn || !checkOut) {
-        alert('Please fill in all required fields: Location, Check In, and Check Out dates.')
-    }
-    else {
-        document.getElementById('bookingForm').submit()
-    }
+document.addEventListener('DOMContentLoaded', () => {
 
+    reservedHotelsDetails.forEach(details => {
+        console.log(details)
+        const hot = hotelData.hotels.find(h => h.id == details.id)
+        console.log(hot)
+        createHotelCard(hot,details.duration)
+    });
+    
 })
 
-const hotels = hotelData.hotels
 
-const mostPopularHotels = hotels.sort((a,b) => b.review_scores_rating - a.review_scores_rating).slice(0,3);
 
-console.log(mostPopularHotels)
-
-const createHotelCard = (hotel) => {
+const createHotelCard = (hotel, duration) => {
 
     const id = hotel.id
     const hotelName = hotel.name
 
     const imageUrl = hotel.picture_url.url
 
-    const price = hotel.price
+    const price = duration == null ? hotel.price : hotel.price * duration
 
     const country = hotel.country
     const street = hotel.street
@@ -42,6 +37,17 @@ const createHotelCard = (hotel) => {
 
     hotelElement.addEventListener('click', () => {
         window.location.href = `hotel-details.html?hotelId=${id}`
+        if(duration != null){
+
+            const bookingDetails = {
+                hotelId: id,
+                duration: duration
+            };
+
+            const bookingDetailsStr = JSON.stringify(bookingDetails)
+
+            localStorage.setItem('bookingDetails',bookingDetailsStr)
+        }
     })
 
     hotelElement.innerHTML = `
@@ -58,10 +64,3 @@ const createHotelCard = (hotel) => {
     hotel_container.appendChild(hotelElement)
 
 }
-
-
-
-mostPopularHotels.forEach(hotel => {
-    createHotelCard(hotel)
-});
-

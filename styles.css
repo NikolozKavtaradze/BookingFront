@@ -169,6 +169,9 @@ nav{
     top: 0;
 }
 
+.date_input {
+}
+
 
 .booking_container .form_group p{
     margin-top: 0.5rem;
@@ -432,6 +435,27 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.reserve_group {
+    display: flex;
+    justify-content: center;
+}
+
+.reserve_group button {
+    background-color: blue;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    padding: 20px 40px;
+    border-radius: 3rem;
+    transition: background-color 0.4s;
+}
+
+.reserve_group button:hover {
+    background-color: rgb(83, 83, 248);
 }
 
 @media (width < 900px){

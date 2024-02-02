@@ -1,5 +1,8 @@
 import hotelData from "../hotel-list.json" assert {type: 'json'}
 
+const reservedBookings = []
+
+console.log('reservedBookings',reservedBookings)
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -13,6 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log(hotelId)
 
+    const bookingDetails = JSON.parse(localStorage.getItem('bookingDetails'))
+
+    let duration
+    if(bookingDetails != null) {
+
+        duration = bookingDetails.duration
+    }
+
+
     const hotel = hotelData.hotels.find(h => h.id == hotelId)
 
     const country = hotel.country
@@ -21,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const imageUrl = hotel.xl_picture_url || hotel.picture_url.url
 
     console.log(imageUrl)
-    const price = hotel.price
+    const price = duration == null ? hotel.price : hotel.price * duration
     const description = hotel.description
     const summary = hotel.summary || "Not specified"
     
@@ -91,8 +103,34 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     `
 
+    const reserve_section = document.createElement('section')
+    reserve_section.classList.add('reservation_section', 'section_container')
+
+    const reserve_group = document.createElement('div')
+    reserve_group.classList.add('reserve_group')
+
+    const reserve_button = document.createElement('button')
+    reserve_button.innerText = 'Reserve'
+    reserve_button.addEventListener('click', () =>{
+        const reservedDetails = {
+            id: hotelId,
+            duration: duration
+
+        }
+        reservedBookings.push(reservedDetails)
+
+        localStorage.setItem('reservedHotels',JSON.stringify(reservedBookings))
+
+        localStorage.removeItem('bookingDetails')
+    })
+
+    reserve_group.appendChild(reserve_button)
+
+    reserve_section.appendChild(reserve_group)
+
     hotel_container.appendChild(hotel_header)
     hotel_container.appendChild(hotContainer)
+    hotel_container.appendChild(reserve_section)
 
     location_container.innerHTML = `
     <iframe
